@@ -1,9 +1,9 @@
 package com.omarassidi.greetingsapp.components
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -54,7 +53,7 @@ fun TextPill(text: String, color: Color, modifier: Modifier = Modifier) {
             .zIndex(10f)
             .wrapContentSize()
             .shadow(
-                elevation = 50.dp,
+                elevation = 40.dp,
                 spotColor = colorState,
                 ambientColor = colorState,
                 shape = RoundedCornerShape(20.dp)
@@ -64,7 +63,10 @@ fun TextPill(text: String, color: Color, modifier: Modifier = Modifier) {
                 RoundedCornerShape(20.dp)
             )
             .padding(16.dp)
-            .clickable {
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ) {
                 colorIndex = colors.indexOf(colors.random())
             },
 

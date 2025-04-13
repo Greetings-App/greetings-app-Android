@@ -18,7 +18,7 @@ data class Message(val text: String, val color: Color)
 fun MessagesView() {
     val messages = listOf(
         Message(
-            text = "Welcome to Jetpack Compose Programming", color = Color.Gray
+            text = "Welcome to Compose Programming", color = Color.Gray
         ),
         Message(text = "Hello there", color = Color.Green),
         Message(text = "Yes I am", color = Color.Yellow),
