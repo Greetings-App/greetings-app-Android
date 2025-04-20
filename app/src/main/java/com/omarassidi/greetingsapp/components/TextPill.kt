@@ -1,5 +1,7 @@
 package com.omarassidi.greetingsapp.components
 
+import android.content.res.Configuration
+import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,18 +21,34 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.omarassidi.greetingsapp.R
 import com.omarassidi.greetingsapp.ui.theme.GreetingsAppTheme
 
+
 @Composable
-fun TextPill(text: String, color: Color, modifier: Modifier = Modifier) {
+fun isTablet(): Boolean {
+    val configuration = LocalConfiguration.current
+    return if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        configuration.screenWidthDp > 1000
+    } else {
+        configuration.screenWidthDp > 800
+    }
+}
+
+@Composable
+fun TextPill(@StringRes text: Int, color: Color, modifier: Modifier = Modifier) {
     var colorIndex by rememberSaveable {
         mutableIntStateOf(-1)
     }
+    val textStyle =
+        if (isTablet()) MaterialTheme.typography.displayLarge else MaterialTheme.typography.bodyLarge
     val colors = listOf(
         Color.Red,
         Color.Green,
@@ -48,7 +66,7 @@ fun TextPill(text: String, color: Color, modifier: Modifier = Modifier) {
         label = ""
     )
     Text(
-        text = text,
+        text = stringResource(id = text),
         modifier = Modifier
             .zIndex(10f)
             .wrapContentSize()
@@ -71,7 +89,7 @@ fun TextPill(text: String, color: Color, modifier: Modifier = Modifier) {
             },
 
         textAlign = TextAlign.Start,
-        style = MaterialTheme.typography.bodyLarge,
+        style = textStyle,
         fontWeight = FontWeight.SemiBold,
         color = Color.White,
 
@@ -83,9 +101,9 @@ fun TextPill(text: String, color: Color, modifier: Modifier = Modifier) {
 fun TextPillPreview() {
     GreetingsAppTheme {
         Column {
-            TextPill(text = "Hello World", color = Color.Yellow)
-            TextPill(text = "Hummus", color = Color.Blue)
-            TextPill(text = "Peace", color = Color.Red)
+            TextPill(text = R.string.hello_there, color = Color.Yellow)
+            TextPill(text = R.string.hello_there, color = Color.Blue)
+            TextPill(text = R.string.hello_there, color = Color.Red)
         }
     }
 }

@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Greetings App</string>
+    <string name="Boom">Boom.</string>
+    <string name="explore_compose_development">Explore Compose Development</string>
+    <string name="views_are_old">Views are old</string>
+    <string name="compose_is_awesome">Compose is awesome</string>
+    <string name="compose_is_cool">Compose is cool</string>
+    <string name="compose_is_amazing">Compose is amazing</string>
+    <string name="greetings">Greetings</string>
+    <string name="welcome_to_compose_programming">Welcome to Compose Programming</string>
+    <string name="hello_there">Hello there</string>
+    <string name="yes_i_am">Yes I am</string>
+    <string name="english">English</string>
+    <string name="spanish">Spanish</string>
+    <string name="arabic">Arabic</string>
+
 </resources>

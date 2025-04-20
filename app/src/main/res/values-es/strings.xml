@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Greetings App</string>
+    <string name="Boom">Pum</string>
+    <string name="explore_compose_development">Explora el desarrollo con Compose</string>
+    <string name="views_are_old">Views es antiguo</string>
+    <string name="compose_is_awesome">Compose es impresionante.</string>
+    <string name="compose_is_cool">Compose es geniall</string>
+    <string name="compose_is_amazing">Compose es asombroso</string>
+    <string name="greetings">Buenos días</string>
+    <string name="welcome_to_compose_programming">Bienvenido a la programación de Compose.</string>
+    <string name="hello_there">¡Hola, qué tal</string>
+    <string name="yes_i_am">Sí, lo so</string>
+    <string name="english">Inglés</string>
+    <string name="spanish">Español</string>
+    <string name="arabic">Árabe</string>
+</resources>
