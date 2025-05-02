@@ -8,6 +8,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +19,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.DropdownMenu
@@ -35,10 +41,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -67,13 +76,18 @@ class MainActivity : ComponentActivity() {
             )
         )
         setContent {
-            GreetingsAppTheme {
+            var isDarkMode by rememberSaveable {
+                mutableStateOf(false)
+            }
+            GreetingsAppTheme(darkTheme = isDarkMode) {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainView()
+                    MainView {
+                        isDarkMode = !isDarkMode
+                    }
                 }
             }
         }
@@ -81,36 +95,36 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainView() {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .drawWithCache {
-                    val gradient = Brush.linearGradient(
-                        start = Offset.Zero, // topLeading
-                        end = Offset(size.width, size.height), // bottomTrailing
-                        colors = listOf(
-                            Color.Blue.copy(alpha = 0.3f),
-                            Color(139 / 255, 80 / 255, 240 / 255).copy(alpha = 0.3f)
-                        )
+fun MainView(onRotate: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .drawWithCache {
+                val gradient = Brush.linearGradient(
+                    start = Offset.Zero, // topLeading
+                    end = Offset(size.width, size.height), // bottomTrailing
+                    colors = listOf(
+                        Color.Blue.copy(alpha = 0.3f),
+                        Color(139 / 255, 80 / 255, 240 / 255).copy(alpha = 0.3f)
                     )
-                    onDrawBehind {
-                        drawRect(brush = gradient)
-                    }
-                }
-                .windowInsetsPadding(WindowInsets.safeContent.only(WindowInsetsSides.Vertical))
-                .padding(horizontal = 16.dp)
-
-        ) {
-            Column {
-                LanguageOptionsView(modifier = Modifier.align(Alignment.End))
-                if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT || isTablet()) {
-                    ContentView()
-                } else {
-                    LandscapeContentView()
+                )
+                onDrawBehind {
+                    drawRect(brush = gradient)
                 }
             }
+            .windowInsetsPadding(WindowInsets.safeContent.only(WindowInsetsSides.Vertical))
+            .padding(horizontal = 16.dp)
+
+    ) {
+        Column {
+            LanguageOptionsView(modifier = Modifier.align(Alignment.End))
+            if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT || isTablet()) {
+                ContentView(onRotate)
+            } else {
+                LandscapeContentView(onRotate)
+            }
         }
+    }
 }
 
 @Composable
@@ -153,9 +167,9 @@ fun LanguageOptionsView(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ContentView(modifier: Modifier = Modifier) {
+fun ContentView(onRotate: () -> Unit, modifier: Modifier = Modifier) {
     Column {
-        TitleView()
+        TitleView(onRotate = onRotate)
         Spacer(modifier = Modifier.height(130.dp))
         MessagesView()
     }
@@ -166,6 +180,6 @@ fun ContentView(modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     GreetingsAppTheme {
-        MainView()
+        MainView{}
     }
 }

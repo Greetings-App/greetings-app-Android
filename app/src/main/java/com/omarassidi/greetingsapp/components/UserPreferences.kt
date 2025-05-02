@@ -25,7 +25,14 @@ class UserPreferences(private val context: Context) {
         updateResources(getLocale())
     }
 
-    fun updateResources(language: String) {
+    fun changeTheme(isNightMode: Boolean) {
+        AppCompatDelegate.setDefaultNightMode(
+            if (isNightMode) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
+    }
+
+    private fun updateResources(language: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context.getSystemService(LocaleManager::class.java).applicationLocales =
                 LocaleList.forLanguageTags(language)

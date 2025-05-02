@@ -14,7 +14,7 @@ import com.omarassidi.greetingsapp.R
 import com.omarassidi.greetingsapp.ui.theme.GreetingsAppTheme
 
 @Composable
-fun TitleView() {
+fun TitleView(onRotate: () -> Unit) {
     val subTitles = listOf(
         R.string.explore_compose_development,
         R.string.views_are_old,
@@ -29,7 +29,7 @@ fun TitleView() {
         GreetingsTextView(modifier = Modifier.weight(1f), subTitle = subTitle) {
             subTitle = subTitles.random()
         }
-        RingView()
+        RingView(onRotate = onRotate)
     }
 }
 
@@ -37,6 +37,6 @@ fun TitleView() {
 @Composable
 fun TitleViewPreview() {
     GreetingsAppTheme {
-        TitleView()
+        TitleView {}
     }
 }

@@ -23,9 +23,9 @@ import androidx.compose.ui.unit.dp
 import com.omarassidi.greetingsapp.ui.theme.GreetingsAppTheme
 
 @Composable
-fun LandscapeContentView() {
+fun LandscapeContentView(onRotate: () -> Unit) {
         Row {
-            VerticalTitleView()
+            VerticalTitleView(onRotate = onRotate)
             Spacer(modifier = Modifier.width(130.dp))
             MessagesView()
         }
@@ -35,6 +35,6 @@ fun LandscapeContentView() {
 @Composable
 fun LandscapeContentViewPreview() {
     GreetingsAppTheme {
-        LandscapeContentView()
+        LandscapeContentView{}
     }
 }

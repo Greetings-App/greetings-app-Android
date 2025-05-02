@@ -18,7 +18,7 @@ import com.omarassidi.greetingsapp.R
 import com.omarassidi.greetingsapp.ui.theme.GreetingsAppTheme
 
 @Composable
-fun VerticalTitleView() {
+fun VerticalTitleView(onRotate: () -> Unit) {
     val subTitles = listOf(
         R.string.explore_compose_development,
         R.string.views_are_old,
@@ -37,7 +37,7 @@ fun VerticalTitleView() {
         GreetingsTextView(subTitle = subTitle) {
             subTitle = subTitles.random()
         }
-        RingView()
+        RingView(onRotate = onRotate)
     }
 }
 
@@ -45,6 +45,6 @@ fun VerticalTitleView() {
 @Composable
 fun VerticalTitlePreview() {
     GreetingsAppTheme {
-        VerticalTitleView()
+        VerticalTitleView{}
     }
 }

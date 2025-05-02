@@ -16,10 +16,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RingView() {
+fun RingView(onRotate: () -> Unit) {
     val pink = Color(0xFFFFC0CB)
     val purple = Color(0xFF800080)
     val orange = Color(0xFFFFA500)
@@ -35,6 +36,7 @@ fun RingView() {
             indication = null
         ) {
             isRotated = !isRotated
+            onRotate()
         }) {
         rotate(degrees = angleState) {
             drawCircle(
